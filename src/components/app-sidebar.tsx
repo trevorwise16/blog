@@ -8,6 +8,7 @@ import {
         SidebarContent,
         SidebarGroup,
         SidebarGroupContent,
+        SidebarHeader,
         SidebarMenu,
         SidebarMenuButton,
         SidebarMenuItem,
@@ -39,7 +40,12 @@ const items = [
 
 export function AppSidebar() {
         return (
-                <Sidebar>
+                <Sidebar collapsible="offcanvas">
+                        <SidebarHeader>
+                                <div className="flex items-center gap-2 px-4 py-2">
+                                        <span className="font-semibold">Trevor&apos;s Blog</span>
+                                </div>
+                        </SidebarHeader>
                         <SidebarContent>
                                 <SidebarGroup>
                                         <SidebarGroupContent>

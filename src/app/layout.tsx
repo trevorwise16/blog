@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Roboto, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeProvider } from "next-themes";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -38,9 +38,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
+          <SidebarProvider defaultOpen={false}>
             <AppSidebar />
             <SidebarInset>
+              <header className="flex h-16 shrink-0 items-center gap-2 px-4">
+                <SidebarTrigger className="-ml-1" />
+              </header>
               <main>
                 {children}
               </main>
