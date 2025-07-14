@@ -46,13 +46,15 @@ export default function Write() {
                                                 />
                                         </div>
 
-                                        <div className="flex gap-4">
+                                        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-4xl px-6 z-40">
+                                                <div className="flex gap-4 justify-end">
                                                 <Button type="submit" className="px-6">
                                                         Save Post
                                                 </Button>
                                                 <Button type="button" variant="outline" className="px-6">
                                                         Save Draft
                                                 </Button>
+                                                </div>
                                         </div>
                                 </form>
                         </main>
