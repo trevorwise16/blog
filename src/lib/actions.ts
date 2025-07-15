@@ -32,7 +32,7 @@ export async function createPost(formData: FormData) {
       content,
       slug,
       status: 'published',
-      authorId: session.user.email,
+      authorId: session.user!.email,
       publishedAt: new Date(),
     })
 
@@ -59,21 +59,16 @@ export async function saveDraft(formData: FormData) {
   const slug = createSlug(title)
 
   try {
-    const [post] = await db
-      .insert(blogPosts)
-      .values({
-        title,
-        content,
-        slug,
-        status: 'draft',
-        authorId: session.user.email,
-      })
-      .returning()
+    await db.insert(blogPosts).values({
+      title,
+      content,
+      slug,
+      status: 'draft',
+      authorId: session.user!.email,
+    })
 
     // Revalidate any pages that might show drafts
     revalidatePath('/')
-
-    return { success: true, id: post.id }
   } catch (error) {
     console.error('Failed to save draft:', error)
     throw new Error('Failed to save draft')
