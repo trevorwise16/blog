@@ -1,77 +1,81 @@
-"use server"
+'use server'
 
-import { db } from "@/db"
-import { blogPosts } from "@/db/schema"
-import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
+import { db } from '@/db'
+import { blogPosts } from '@/db/schema'
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+import { requireAuth } from '@/lib/auth'
 
 function createSlug(s: string) {
-        return s
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, "-")
-                .replace(/(^-|-$)/g, "")
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
 }
 
 export async function createPost(formData: FormData) {
-        const title = formData.get("title") as string
-        const content = formData.get("content") as string
+  // Check authentication first
+  const session = await requireAuth()
 
-        if (!title || !content) {
-                throw new Error("Title and content are required")
-        }
+  const title = formData.get('title') as string
+  const content = formData.get('content') as string
 
-        const slug = createSlug(title)
+  if (!title || !content) {
+    throw new Error('Title and content are required')
+  }
 
-        try {
-                const [post] = await db
-                        .insert(blogPosts)
-                        .values({
-                                title,
-                                content,
-                                slug,
-                                status: "published",
-                                authorId: "trevor", // You can update this when auth is implemented
-                                publishedAt: new Date(),
-                        })
-                        .returning()
+  const slug = createSlug(title)
 
-                revalidatePath("/")
-        } catch (error) {
-                console.error("Failed to create post:", error)
-                throw new Error("Failed to create post")
-        }
+  try {
+    await db.insert(blogPosts).values({
+      title,
+      content,
+      slug,
+      status: 'published',
+      authorId: session.user.email,
+      publishedAt: new Date(),
+    })
 
-        redirect("/")
+    revalidatePath('/')
+  } catch (error) {
+    console.error('Failed to create post:', error)
+    throw new Error('Failed to create post')
+  }
+
+  redirect('/')
 }
 
 export async function saveDraft(formData: FormData) {
-        const title = formData.get("title") as string
-        const content = formData.get("content") as string
+  // Check authentication first
+  const session = await requireAuth()
 
-        if (!title || !content) {
-                throw new Error("Title and content are required")
-        }
+  const title = formData.get('title') as string
+  const content = formData.get('content') as string
 
-        const slug = createSlug(title)
+  if (!title || !content) {
+    throw new Error('Title and content are required')
+  }
 
-        try {
-                const [post] = await db
-                        .insert(blogPosts)
-                        .values({
-                                title,
-                                content,
-                                slug,
-                                status: "draft",
-                                authorId: "trevor",
-                        })
-                        .returning()
+  const slug = createSlug(title)
 
-                // Revalidate any pages that might show drafts
-                revalidatePath("/")
+  try {
+    const [post] = await db
+      .insert(blogPosts)
+      .values({
+        title,
+        content,
+        slug,
+        status: 'draft',
+        authorId: session.user.email,
+      })
+      .returning()
 
-                return { success: true, id: post.id }
-        } catch (error) {
-                console.error("Failed to save draft:", error)
-                throw new Error("Failed to save draft")
-        }
+    // Revalidate any pages that might show drafts
+    revalidatePath('/')
+
+    return { success: true, id: post.id }
+  } catch (error) {
+    console.error('Failed to save draft:', error)
+    throw new Error('Failed to save draft')
+  }
 }
