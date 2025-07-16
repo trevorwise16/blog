@@ -1,6 +1,7 @@
 'use client'
 
-import { Home, User, Mail, PenTool } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+import { Home, User, Mail, PenTool, Bird } from 'lucide-react'
 import Link from 'next/link'
 
 import {
@@ -29,6 +30,11 @@ const items = [
     icon: PenTool,
   },
   {
+    title: 'Birds',
+    url: '/bird',
+    icon: Bird,
+  },
+  {
     title: 'About',
     url: '/about',
     icon: User,
@@ -41,6 +47,8 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const { data: session } = useSession()
+
   return (
     <Sidebar collapsible="offcanvas">
       <SidebarHeader>
@@ -52,16 +60,18 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items
+                .filter((item) => !(item.title == 'Write') || session)
+                .map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
