@@ -26,9 +26,6 @@ export default async function Home() {
         <h1 className="text-4xl font-bold text-foreground mb-4">
           Trevor&apos;s Soapbox
         </h1>
-        {/* <p className="text-lg text-muted-foreground"> */}
-        {/*         Trevor Saying Stuff */}
-        {/* </p> */}
       </header>
 
       <main>
