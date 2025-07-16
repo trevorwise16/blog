@@ -1,0 +1,20 @@
+CREATE TABLE "birds" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"species_code" varchar(20) NOT NULL,
+	"sci_name" varchar(255) NOT NULL,
+	"com_name" varchar(255) NOT NULL,
+	"category" varchar(50) NOT NULL,
+	"taxon_order" integer NOT NULL,
+	"order" varchar(100),
+	"family_code" varchar(50),
+	"family_com_name" varchar(255),
+	"family_sci_name" varchar(255),
+	"extinct" boolean DEFAULT false,
+	"extinct_year" integer,
+	"report_as" varchar(20),
+	"image_url" text,
+	"description" text,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "birds_species_code_unique" UNIQUE("species_code")
+);

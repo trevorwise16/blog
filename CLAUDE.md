@@ -37,6 +37,7 @@ This is a **Next.js 15 blog application** using the App Router with the followin
 ### Database Schema
 
 The blog uses a single `blogPosts` table with:
+
 - Content fields: `title`, `content`, `excerpt`, `slug`
 - Metadata: `authorId`, `tags`, `metaTitle`, `metaDescription`
 - Status management: `status` ("draft", "published", "archived")
@@ -52,6 +53,7 @@ The blog uses a single `blogPosts` table with:
 ## Current Implementation Status
 
 ### ✅ Completed Features
+
 - Home page with published post listing
 - Post creation UI (`/write` route)
 - Responsive sidebar navigation
@@ -59,6 +61,7 @@ The blog uses a single `blogPosts` table with:
 - Database schema and connection
 
 ### 🚧 Partial/Missing Features
+
 - **Post creation API**: Frontend form exists but needs `/api/posts` endpoint
 - **Individual post pages**: Route exists (`/posts/[slug]`) but needs implementation
 - **Post editing**: No edit functionality yet
@@ -67,6 +70,7 @@ The blog uses a single `blogPosts` table with:
 ## Styling Patterns
 
 Uses **Tailwind CSS v4** with shadcn/ui design system:
+
 - CSS custom properties for theming (`--foreground`, `--background`, etc.)
 - Consistent spacing with Tailwind scale
 - shadcn/ui components for complex UI (buttons, inputs, sidebar)
@@ -82,6 +86,7 @@ Uses **Tailwind CSS v4** with shadcn/ui design system:
 ## Common Tasks
 
 When implementing new features:
+
 1. Use existing shadcn/ui components where possible
 2. Follow the established Tailwind + CSS custom properties pattern
 3. Server Components for data fetching, Client Components for interactivity

@@ -8,6 +8,13 @@
       "when": 1752271659929,
       "tag": "0000_late_killmonger",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752686355278,
+      "tag": "0001_bumpy_ozymandias",
+      "breakpoints": true
     }
   ]
 }
