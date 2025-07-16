@@ -1,10 +1,11 @@
 'use server'
 
 import { db } from '@/db'
-import { blogPosts } from '@/db/schema'
+import { blogPosts, birds } from '@/db/schema'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requireAuth } from '@/lib/auth'
+import { eq } from 'drizzle-orm'
 
 function createSlug(s: string) {
   return s
@@ -72,5 +73,14 @@ export async function saveDraft(formData: FormData) {
   } catch (error) {
     console.error('Failed to save draft:', error)
     throw new Error('Failed to save draft')
+  }
+}
+
+export async function getRandomBirdFromDB() {
+  const seed = Math.floor(Math.random() * 11000)
+  const [bird] = await db.select().from(birds).where(eq(birds.id, seed))
+  return {
+    name: bird.comName,
+    sciName: bird.sciName,
   }
 }

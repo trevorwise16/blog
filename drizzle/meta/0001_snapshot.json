@@ -121,9 +121,7 @@
         "birds_species_code_unique": {
           "name": "birds_species_code_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "species_code"
-          ]
+          "columns": ["species_code"]
         }
       },
       "policies": {},
@@ -230,9 +228,7 @@
         "blog_posts_slug_unique": {
           "name": "blog_posts_slug_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
+          "columns": ["slug"]
         }
       },
       "policies": {},
@@ -244,11 +240,7 @@
     "public.post_status": {
       "name": "post_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "published",
-        "archived"
-      ]
+      "values": ["draft", "published", "archived"]
     }
   },
   "schemas": {},
