@@ -40,9 +40,6 @@ export default async function Home() {
                   <h2 className="text-2xl font-semibold text-foreground mb-2 hover:text-primary">
                     {post.title}
                   </h2>
-                  <p className="text-muted-foreground mb-4">
-                    {post.excerpt || post.content}
-                  </p>
                   <div className="text-sm text-muted-foreground">
                     Published on{' '}
                     {post.publishedAt
