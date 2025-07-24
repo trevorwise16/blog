@@ -104,6 +104,24 @@ export default function BirdGenerator() {
     loadBirdData()
   }, [])
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        (event.metaKey || event.ctrlKey) &&
+        event.shiftKey &&
+        event.key === 'k'
+      ) {
+        event.preventDefault()
+        if (!loading) {
+          loadBirdData()
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [loading])
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[200px]">
